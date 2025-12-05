@@ -1,23 +1,17 @@
-// index.js
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
+const http = require('http');
 
-// root route
-app.get('/', (req, res) => {
-  res.type('text').send('Hello, World!');
+const server = http.createServer((req, res) => {
+  if (req.url === '/about') {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('About Page\n');
+  } else {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello, World!\n');
+  }
 });
 
-// about route requested in assignment
-app.get('/about', (req, res) => {
-  res.type('text').send('About Page');
-});
-
-// default 404 for other paths
-app.use((req, res) => {
-  res.status(404).type('text').send('Not Found');
-});
-
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+server.listen(3000, () => {
+  console.log('Server running at http://localhost:3000/');
 });
